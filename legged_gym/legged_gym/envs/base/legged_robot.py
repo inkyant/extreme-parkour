@@ -874,7 +874,10 @@ class LeggedRobot(BaseTask):
             camera_horizontal_fov = self.cfg.depth.horizontal_fov 
             camera_props.horizontal_fov = camera_horizontal_fov
 
+            #TODO: appears to crash here
+            print("creating camera sensor...")
             camera_handle = self.gym.create_camera_sensor(env_handle, camera_props)
+            print("finished creating camera sensor...")
             self.cam_handles.append(camera_handle)
             
             local_transform = gymapi.Transform()

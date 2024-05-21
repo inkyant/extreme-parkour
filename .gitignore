@@ -2,3 +2,4 @@ isaacgym*
 .ipynb_checkpoints/
 .vscode/
 *img
+legged_gym/legged_gym/scripts/tokens.py

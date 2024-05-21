@@ -60,7 +60,7 @@ def play(args):
         web_viewer = webviewer.WebViewer()
     faulthandler.enable()
     exptid = args.exptid
-    log_pth = "../../logs/{}/".format(args.proj_name) + args.exptid
+    log_pth = "/opt/isaacgym/output_files" + "/logs/{}/".format(args.proj_name) + args.exptid
 
     env_cfg, train_cfg = task_registry.get_cfgs(name=args.task)
     # override some parameters for testing
@@ -134,6 +134,8 @@ def play(args):
     infos = {}
     infos["depth"] = env.depth_buffer.clone().to(ppo_runner.device)[:, -1] if ppo_runner.if_depth else None
 
+    images = []
+
     for i in range(10*int(env.max_episode_length)):
         if args.use_jit:
             if env.cfg.depth.use_camera:
@@ -166,14 +168,21 @@ def play(args):
             
         obs, _, rews, dones, infos = env.step(actions.detach())
         if args.web:
-            web_viewer.render(fetch_results=True,
+            image = web_viewer.render(fetch_results=True,
                         step_graphics=True,
                         render_all_camera_sensors=True,
                         wait_for_page_load=True)
+            images.append(image)
         print("time:", env.episode_length_buf[env.lookat_id].item() / 50, 
               "cmd vx", env.commands[env.lookat_id, 0].item(),
               "actual vx", env.base_lin_vel[env.lookat_id, 0].item(), )
         
+        if env.episode_length_buf[env.lookat_id].item() / 50 == 2:
+            print(images[0].shape)
+            vidwriter = cv2.VideoWriter("/opt/isaacgym/output_files/output.mp4", cv2.VideoWriter_fourcc(*"mp4v"), 30, (540, 960))
+            for frame in images:
+                vidwriter.write(frame)
+            vidwriter.release()
         id = env.lookat_id
         
 

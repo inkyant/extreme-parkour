@@ -38,16 +38,22 @@ from legged_gym.utils import get_args, task_registry
 from shutil import copyfile
 import torch
 import wandb
+from tokens import WANDB_API_KEY
 
 def train(args):
     args.headless = True
-    log_pth = LEGGED_GYM_ROOT_DIR + "/logs/{}/".format(args.proj_name) + args.exptid
+    args.debug = True
+    log_pth = "/opt/isaacgym/output_files" + "/logs/{}/".format(args.proj_name) + args.exptid
+
     try:
-        os.makedirs(log_pth)
+        if not os.path.exists(log_pth):
+            os.makedirs(log_pth)
+            print("made logs directory")
     except:
-        pass
+        print("unable to make logs directory")
+        quit()
     if args.debug:
-        mode = "disabled"
+        mode = "online"
         args.rows = 10
         args.cols = 8
         args.num_envs = 64
@@ -56,7 +62,12 @@ def train(args):
     
     if args.no_wandb:
         mode = "disabled"
-    wandb.init(project=args.proj_name, name=args.exptid, entity="parkour", group=args.exptid[:3], mode=mode, dir="../../logs")
+
+    print("loading wandb project: ", args.proj_name)
+
+    os.environ["WANDB_API_KEY"] = WANDB_API_KEY
+
+    wandb.init(project=args.proj_name, name=args.exptid, entity="apfurman", group=args.exptid[:3], mode=mode, dir=log_pth)
     wandb.save(LEGGED_GYM_ENVS_DIR + "/base/legged_robot_config.py", policy="now")
     wandb.save(LEGGED_GYM_ENVS_DIR + "/base/legged_robot.py", policy="now")
 
