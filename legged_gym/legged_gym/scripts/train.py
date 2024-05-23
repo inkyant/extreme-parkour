@@ -38,7 +38,7 @@ from legged_gym.utils import get_args, task_registry
 from shutil import copyfile
 import torch
 import wandb
-from tokens import WANDB_API_KEY
+# from tokens import WANDB_API_KEY
 
 def train(args):
     args.headless = True
@@ -65,7 +65,7 @@ def train(args):
 
     print("loading wandb project: ", args.proj_name)
 
-    os.environ["WANDB_API_KEY"] = WANDB_API_KEY
+    # os.environ["WANDB_API_KEY"] = WANDB_API_KEY
 
     wandb.init(project=args.proj_name, name=args.exptid, entity="apfurman", group=args.exptid[:3], mode=mode, dir=log_pth)
     wandb.save(LEGGED_GYM_ENVS_DIR + "/base/legged_robot_config.py", policy="now")
