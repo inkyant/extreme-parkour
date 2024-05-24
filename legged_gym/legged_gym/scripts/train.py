@@ -42,7 +42,7 @@ import wandb
 
 def train(args):
     args.headless = True
-    args.debug = True
+    # args.debug = True
     log_pth = "/opt/isaacgym/output_files" + "/logs/{}/".format(args.proj_name) + args.exptid
 
     try:
