@@ -95,6 +95,9 @@ class TaskRegistry():
         # parse sim params (convert to dict first)
         sim_params = {"sim": class_to_dict(env_cfg.sim)}
         sim_params = parse_sim_params(args, sim_params)
+        
+        # ant: for name="a1", task_class is LeggedRobot, 
+        # LeggedRobot is defined in extreme-parkour/legged_gym/legged_gym/envs/base/legged_robot.py
         env = task_class(   cfg=env_cfg,
                             sim_params=sim_params,
                             physics_engine=args.physics_engine,
