@@ -235,7 +235,7 @@ class WebViewer:
                fetch_results: bool = True,
                step_graphics: bool = True,
                render_all_camera_sensors: bool = True,
-               wait_for_page_load: bool = True):
+               wait_for_page_load: bool = True) -> None:
         """Render and get the image from the current camera
 
         This function must be called after the simulation is stepped (post_physics_step).
@@ -308,8 +308,6 @@ class WebViewer:
         if self._env.cfg.depth.use_camera:
             self._event_stream_depth.set()
         self._notified = True
-
-        return self._image
 
 
 def ik(jacobian_end_effector: torch.Tensor,
