@@ -115,6 +115,10 @@ class Terrain:
             self.add_terrain_to_map(terrain, i, j)
         
     def curiculum(self, random=False, max_difficulty=False):
+        '''
+        Adds terrains for each row and column. The terrain type changes with the column and
+        the difficulty increases with the row (unless random is True).
+        '''
         for j in range(self.cfg.num_cols):
             for i in range(self.cfg.num_rows):
                 difficulty = i / (self.cfg.num_rows-1)

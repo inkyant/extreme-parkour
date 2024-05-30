@@ -60,6 +60,10 @@ class A1ParkourCfg( LeggedRobotCfg ):
         decimation = 4
 
     class asset( LeggedRobotCfg.asset ):
+        # ant: this file is presumably edited from a1_old.urdf
+        # seems like the edit is to change the effort for every thigh and calf joint from 55 to 30
+        # and to add a camera box, calibration box (commented out), base dot (commented out)
+        # and to move the collision box slightly in the x, and slightly wider in the x
         # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/go1/urdf/go1_new.urdf'
         file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/a1/urdf/a1.urdf'
         foot_name = "foot"
